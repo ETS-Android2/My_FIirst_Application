@@ -73,8 +73,8 @@ import okhttp3.Response;
 import static com.example.myfiirstapplication.Main3Activity.user_id;
 
 public class Main5Activity extends AppCompatActivity implements View.OnClickListener {
-  public final  String url="http:192.168.31.83:8080/xhy/Find_bookServlet";
-  public final  String url2="http:192.168.31.83:8080/xhy/Find_lend_book_Servlet";
+  public final static String url="http:192.168.31.83:8080/xhy/Find_bookServlet";
+  public final static String url2="http:192.168.31.83:8080/xhy/Find_lend_book_Servlet";
 
     //声明一个long类型变量：用于存放上一点击“返回键”的时刻
     private long mExitTime;
@@ -94,14 +94,14 @@ public class Main5Activity extends AppCompatActivity implements View.OnClickList
         setContentView(R.layout.activity_main5);
         viewPager=findViewById(R.id.my_viewPager);
         bottomNavigationView=findViewById(R.id.bottom_navigation);
-        initPager(viewPager);
-        //拿到intent
         Intent intent=this.getIntent();
         //拿到json字符串  第一次登录拿到的所有数据
         book_all=intent.getStringExtra("book_all");
         //转成list<Book>对象
-         final List<Book> list= gson.fromJson(book_all, new TypeToken<List<Book>>() {
+        final List<Book> list= gson.fromJson(book_all, new TypeToken<List<Book>>() {
         }.getType());
+        initPager(viewPager);
+
         //监听滑动
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -112,98 +112,94 @@ public class Main5Activity extends AppCompatActivity implements View.OnClickList
         public void onPageSelected(int position) {
         switch (position){
             case 0:
-                final ListView myListview=findViewById(R.id.my_list);
-                final MyListView_Adapter myAdapter = new MyListView_Adapter(list);
-                myListview.setTextFilterEnabled(true);//开启过滤
-                SearchView searchView=findViewById(R.id.searchView);
-                Button button=findViewById(R.id.btn_submmit);
-                button.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                       Toast.makeText(Main5Activity.this,"努力搜索中...",Toast.LENGTH_SHORT).show();
-                    }
-                });
-                searchView.setOnSearchClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Toast.makeText(Main5Activity.this,"谁让你点了",Toast.LENGTH_SHORT).show();
-                    }
-                });
-        //文本改变监听
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                //提交监听
-                return false;
-            }
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                if(TextUtils.isEmpty(newText)){
-                    myListview.clearTextFilter();
-                    myAdapter.getFilter().filter("");//清除下面的提示框
-//                      MyListView_Adapter myListviewAdapter =(MyListView_Adapter) myListview.getAdapter();
-////                    记得要设置清除对适配器的还原，不然数据不会恢复显示哦
-//                    myListviewAdapter.getFilter().filter("");
-                }
-                else {
-                    myAdapter.getFilter().filter(newText);
-//                         myListview.setFilterText(newText);//对listview过滤改为 对适配器的筛选
-//                         MyListView_Adapter myListviewAdapter =(MyListView_Adapter) myListview.getAdapter();
-//                        myListviewAdapter.getFilter().filter(newText);
-                }
-                return true;
-            }
-        });
-        //添加适配器
-        myListview.setAdapter(myAdapter);
-        //item点击监听
-        myListview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long positionID) {
-                Toast.makeText(Main5Activity.this,"即将前往详情页",Toast.LENGTH_SHORT).show();
-                Intent info_intent=new Intent(Main5Activity.this,Main2Activity.class);
-                //点击的item传入详情activity
-                Book book = list.get(position);
-                String clicked_item = gson.toJson(book);
-                info_intent.putExtra("book_clicked",clicked_item);
-                startActivity(info_intent);
-            }
-        });
-       //刷新状态控件
-       final SwipeRefreshLayout swipeRefreshLayout=findViewById(R.id.refresh);
-       swipeRefreshLayout.setColorSchemeResources(R.color.red);
-       swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-           @Override
-           public void onRefresh() {
-                Http_Refresh(url);
-               Toast.makeText(Main5Activity.this,"正在刷新",Toast.LENGTH_SHORT).show();
-               new Handler().postDelayed(new Runnable() {
-                   @Override
-                   public void run(){
-                       //在子线程已经拿到了新数据,防止没拿到
-                       if(new_books!=null){
-                           //实际刷新操作
-                           list.clear();//清空
-                           list.addAll(new_books);
-                           myAdapter.notifyDataSetChanged();//通知适配器更新视图
-                           swipeRefreshLayout.setRefreshing(false);
-                           System.out.println("刷新所在线程"+Thread.currentThread().getId());//主线程
-                           Toast.makeText(Main5Activity.this,"刷新成功",Toast.LENGTH_SHORT).show();
-                       }
-                       else {
-                           //象征性提示其实啥也没改
-                           swipeRefreshLayout.setRefreshing(false);
-                           Toast.makeText(Main5Activity.this,"刷新成功",Toast.LENGTH_SHORT).show();
-                       }
-                   }
-               },3000);
-           }
-       });
+
+//                final ListView myListview=findViewById(R.id.my_list);
+//                final MyListView_Adapter myAdapter = new MyListView_Adapter(list);
+//                myListview.setTextFilterEnabled(true);//开启过滤
+//                SearchView searchView=findViewById(R.id.searchView);
+//                Button button=findViewById(R.id.btn_submmit);
+//                button.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View view) {
+//                       Toast.makeText(Main5Activity.this,"努力搜索中...",Toast.LENGTH_SHORT).show();
+//                    }
+//                });
+//        //文本改变监听
+//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+//            @Override
+//            public boolean onQueryTextSubmit(String query) {
+//                //提交监听
+//                return false;
+//            }
+//            @Override
+//            public boolean onQueryTextChange(String newText) {
+//                if(TextUtils.isEmpty(newText)){
+//                    myListview.clearTextFilter();
+//                    myAdapter.getFilter().filter("");//清除下面的提示框
+////                      MyListView_Adapter myListviewAdapter =(MyListView_Adapter) myListview.getAdapter();
+//////                    记得要设置清除对适配器的还原，不然数据不会恢复显示哦
+////                    myListviewAdapter.getFilter().filter("");
+//                }
+//                else {
+//                    myAdapter.getFilter().filter(newText);
+////                         myListview.setFilterText(newText);//对listview过滤改为 对适配器的筛选
+////                         MyListView_Adapter myListviewAdapter =(MyListView_Adapter) myListview.getAdapter();
+////                        myListviewAdapter.getFilter().filter(newText);
+//                }
+//                return true;
+//            }
+//        });
+//        //添加适配器
+//        myListview.setAdapter(myAdapter);
+//        //item点击监听
+//        myListview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> adapterView, View view, int position, long positionID) {
+//                Toast.makeText(Main5Activity.this,"即将前往详情页",Toast.LENGTH_SHORT).show();
+//                Intent info_intent=new Intent(Main5Activity.this,Main2Activity.class);
+//                //点击的item传入详情activity
+//                Book book = list.get(position);
+//                String clicked_item = gson.toJson(book);
+//                info_intent.putExtra("book_clicked",clicked_item);
+//                startActivity(info_intent);
+//            }
+//        });
+//       //刷新状态控件
+//       final SwipeRefreshLayout swipeRefreshLayout=findViewById(R.id.refresh);
+//       swipeRefreshLayout.setColorSchemeResources(R.color.red);
+//       swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+//           @Override
+//           public void onRefresh() {
+//                Http_Refresh(url);
+//               Toast.makeText(Main5Activity.this,"正在刷新",Toast.LENGTH_SHORT).show();
+//               new Handler().postDelayed(new Runnable() {
+//                   @Override
+//                   public void run(){
+//                       //在子线程已经拿到了新数据,防止没拿到
+//                       if(new_books!=null){
+//                           //实际刷新操作
+//                           list.clear();//清空
+//                           list.addAll(new_books);
+//                           myAdapter.notifyDataSetChanged();//通知适配器更新视图
+//                           swipeRefreshLayout.setRefreshing(false);
+//                           System.out.println("刷新所在线程"+Thread.currentThread().getId());//主线程
+//                           Toast.makeText(Main5Activity.this,"刷新成功",Toast.LENGTH_SHORT).show();
+//                       }
+//                       else {
+//                           //象征性提示其实啥也没改
+//                           swipeRefreshLayout.setRefreshing(false);
+//                           Toast.makeText(Main5Activity.this,"刷新成功",Toast.LENGTH_SHORT).show();
+//                       }
+//                   }
+//               },3000);
+//           }
+//       });
        //设置第一个bottommenu选中
        bottomNavigationView.getMenu().getItem(0).setChecked(true);
                 break;
                     case 1:
                         final SwipeRecyclerView recyclerView=findViewById(R.id.book_recycler_view);
+
                         final SwipeRefreshLayout refreshLayout=findViewById(R.id.lend_refresh);
                         refreshLayout.setColorSchemeResources(R.color.red);
                         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -237,11 +233,9 @@ public class Main5Activity extends AppCompatActivity implements View.OnClickList
                         });
                         //设置第二个选中
                         bottomNavigationView.setSelectedItemId(R.id.action_message);
-                        Toast.makeText(Main5Activity.this,"滑到第2个了",Toast.LENGTH_SHORT).show();
                             break;
                         case 2:
                             bottomNavigationView.setSelectedItemId(R.id.personal_center);
-                            Toast.makeText(Main5Activity.this, "再滑就没有了", Toast.LENGTH_SHORT).show();
                             break;
                     }
             }
@@ -282,7 +276,7 @@ public class Main5Activity extends AppCompatActivity implements View.OnClickList
       });
     }
     //当前所在Viewpager fragment
-    private Fragment getViewPagerFragment(int viewpagerId,int position) {
+private Fragment getViewPagerFragment(int viewpagerId,int position) {
         return getSupportFragmentManager().findFragmentByTag("android:switcher:"
                 + viewpagerId + ":" + position);
     }
@@ -348,7 +342,6 @@ private void initPager(ViewPager viewPager){
     @Override
     //this 加上重写方法
     public void onClick(View view) {
-
 
     }
     //数据适配器加载listview内容 基础数据适配器

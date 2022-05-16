@@ -29,28 +29,21 @@ import com.yanzhenjie.recyclerview.SwipeMenuBridge;
 import com.yanzhenjie.recyclerview.SwipeMenuCreator;
 import com.yanzhenjie.recyclerview.SwipeMenuItem;
 import com.yanzhenjie.recyclerview.SwipeRecyclerView;
-
 import org.jetbrains.annotations.NotNull;
-
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
-
 import Entity.Book;
 import httpUtils.helper;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.FormBody;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
 import okhttp3.Response;
 
 import static com.example.myfiirstapplication.Main3Activity.user_id;
-import static com.example.myfiirstapplication.Main5Activity.cookie;
-
 
 public class Bottom_fragment extends Fragment {
   private   SwipeRecyclerView swipeRecyclerView;
@@ -73,6 +66,7 @@ public class Bottom_fragment extends Fragment {
     @Nullable
     @Override
     public  View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        SyncPost();
          View convertView=inflater.inflate(R.layout.lend_book_info, container, false);
          swipeRecyclerView= convertView.findViewById(R.id.book_recycler_view);
            initMenu();//必须在下面之前设置
@@ -93,10 +87,6 @@ public class Bottom_fragment extends Fragment {
         MySwipeViewAdapter(List<Book> bookList) {
             this.list=bookList;
         }
-//        public void delete(List<Book> bookList ,int position){
-//            this.notifyItemMoved(p);
-//            this.list=bookList;
-//        }
         @NonNull
         @Override
         public MySwipeViewAdapter.MyViewholder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
