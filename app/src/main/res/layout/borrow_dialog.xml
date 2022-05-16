@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <TextView
+        android:layout_width="150dp"
+        android:layout_height="68dp"
+        android:text="请选择借书日期:"
+        android:textColor="#2196F3"
+        android:textAlignment="center"
+        android:gravity="center_vertical"
+        android:textSize="20sp">
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/actual_lend_time"
+        android:layout_width="256dp"
+        android:layout_height="68dp"
+        android:background="#fff"
+        android:text="点击选择日期"
+        android:gravity="center_vertical"
+
+        android:textColor="#FF5722"
+        android:textSize="20sp" />
+</LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="150dp"
+                android:layout_height="68dp"
+                android:textAlignment="center"
+                android:gravity="center_vertical"
+                android:textSize="20sp"
+                android:textColor="#E91E63"
+                android:text="请选择还书日期:"
+                />
+            <TextView
+                android:id="@+id/lend_plan_time"
+                android:layout_width="256dp"
+                android:layout_height="68dp"
+                android:text="点击选择日期"
+                android:textColor="#0B0A0B"
+                android:background="#fff"
+                android:gravity="center_vertical"
+                android:textSize="20sp"
+                />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

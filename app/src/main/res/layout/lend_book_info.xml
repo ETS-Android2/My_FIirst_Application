@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Main4Activity">
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:background="#FFD740">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:text="借阅信息"
+        android:textSize="20sp"
+        android:textColor="#448AFF"
+        android:textAlignment="center"
+        android:paddingTop="20dp"
+        android:layout_marginLeft="150dp"
+        >
+    </TextView>
+</RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/on_borrow"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:text="在借中"
+            android:paddingTop="10dp"
+            android:textAlignment="center"
+            android:textSize="25sp">
+
+        </TextView>
+        <TextView
+            android:id="@+id/dll_borrow"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:text="将过期"
+            android:paddingTop="10dp"
+            android:textAlignment="center"
+            android:textSize="25sp">
+        </TextView>
+        <TextView
+            android:id="@+id/returned_book"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:text="已还书"
+            android:paddingTop="10dp"
+            android:textAlignment="center"
+            android:textSize="25sp">
+        </TextView>
+    </LinearLayout>
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/lend_refresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <com.yanzhenjie.recyclerview.SwipeRecyclerView
+            android:id="@+id/book_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+</LinearLayout>
