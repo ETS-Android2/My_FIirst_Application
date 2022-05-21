@@ -24,7 +24,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Main4Activity" />
         <activity android:name=".Main3Activity">
             <intent-filter>
                 <action android:name="second.page" />

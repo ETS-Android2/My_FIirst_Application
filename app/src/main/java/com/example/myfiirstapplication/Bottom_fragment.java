@@ -104,7 +104,7 @@ public class Bottom_fragment extends Fragment {
             holder.lend_author.setText(list.get(position).getBkAuthor());
             holder.lend_press.setText(list.get(position).getBkPress());
             holder.lend_status.setText(list.get(position).getBkStatus());
-            Glide.with(holder.IV).load("http:192.168.31.83:8080/xhy/"+list.get(position).getBkURL()).into(holder.IV);
+            Glide.with(holder.IV).load("http:192.168.43.51:8080/xhy/"+list.get(position).getBkURL()).into(holder.IV);
         }
         @Override
         public int getItemCount() {
@@ -196,7 +196,7 @@ public class Bottom_fragment extends Fragment {
     }
     private void back_book( String bkID){
         System.out.println("借收到的"+bkID);
-        String url="http:192.168.31.83:8080/xhy/Return_book_Servlet";
+        String url="http:192.168.43.51:8080/xhy/Return_book_Servlet";
         helper.postRequest(url, new FormBody.Builder()
                 .add("rdID",user_id)
                 .add("bkID", bkID).add("DateLendAct", record_back_time()), new Callback() {
@@ -225,7 +225,7 @@ public class Bottom_fragment extends Fragment {
         return now_time;
     }
     private void SyncPost() {
-        String url = "http:192.168.31.83:8080/xhy/Find_lend_book_Servlet";
+        String url = "http:192.168.43.51:8080/xhy/Find_lend_book_Servlet";
         helper.postRequest(url, new FormBody.Builder().add("rdID", user_id), new Callback() {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {

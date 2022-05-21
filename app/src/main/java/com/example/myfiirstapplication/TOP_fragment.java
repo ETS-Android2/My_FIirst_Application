@@ -22,7 +22,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentPagerAdapter;
+
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.bumptech.glide.Glide;
@@ -42,6 +42,7 @@ import okhttp3.Callback;
 import okhttp3.FormBody;
 import okhttp3.Response;
 
+import static com.example.myfiirstapplication.Main5Activity.bookUrl;
 import static com.example.myfiirstapplication.Main5Activity.url;
 
 public class TOP_fragment extends Fragment  {
@@ -197,7 +198,7 @@ public class TOP_fragment extends Fragment  {
                 holder.status.setText(books.get(position).getBkStatus());
             }
             //glide 第三方图片加载库，不用原生的因为那个setbackgroundResoure 只能接受int参数
-            Glide.with(holder.IV).load("http:192.168.31.83:8080/xhy/"+books.get(position).getBkURL()).into(holder.IV);
+            Glide.with(holder.IV).load(bookUrl+books.get(position).getBkURL()).into(holder.IV);
         }
         return convertView;
     }

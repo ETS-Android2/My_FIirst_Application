@@ -3,67 +3,56 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.viewpager.widget.ViewPager;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
-import android.app.NotificationManager;
-import android.content.Context;
+
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.Typeface;
+
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
-import android.util.Log;
+
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
+
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.Adapter;
-import android.widget.AdapterView;
+
 import android.widget.BaseAdapter;
-import android.widget.Button;
+
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
-import android.widget.ListAdapter;
-import android.widget.ListView;
-import android.widget.SearchView;
+
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.example.myfiirstapplication.Bottom_fragment.MySwipeViewAdapter;
-import com.google.android.material.bottomnavigation.BottomNavigationMenu;
+
+
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.yanzhenjie.recyclerview.OnItemMenuClickListener;
-import com.yanzhenjie.recyclerview.SwipeMenu;
-import com.yanzhenjie.recyclerview.SwipeMenuBridge;
-import com.yanzhenjie.recyclerview.SwipeMenuCreator;
-import com.yanzhenjie.recyclerview.SwipeMenuItem;
 import com.yanzhenjie.recyclerview.SwipeRecyclerView;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
+
 import java.util.ArrayList;
-import java.util.Calendar;
+
 import java.util.List;
-import java.util.Objects;
+
 
 import Entity.Book;
-import Entity.Reader;
+
 import httpUtils.helper;
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -73,13 +62,12 @@ import okhttp3.Response;
 import static com.example.myfiirstapplication.Main3Activity.user_id;
 
 public class Main5Activity extends AppCompatActivity implements View.OnClickListener {
-  public final static String url="http:192.168.31.83:8080/xhy/Find_bookServlet";
-  public final static String url2="http:192.168.31.83:8080/xhy/Find_lend_book_Servlet";
-
+  public final static String url="http:192.168.43.51:8080/xhy/Find_bookServlet";
+  public final static String url2="http:192.168.43.51:8080/xhy/Find_lend_book_Servlet";
+  public  final static String bookUrl="http:192.168.10.228:8080/xhy/";
     //声明一个long类型变量：用于存放上一点击“返回键”的时刻
     private long mExitTime;
     List<Book> new_books=new ArrayList<>();//必须得分配地址空间？
-    MySwipeViewAdapter mySwipeViewAdapter;
    public static String cookie="2";
     String book_all="";
     //Gson对象
@@ -112,94 +100,11 @@ public class Main5Activity extends AppCompatActivity implements View.OnClickList
         public void onPageSelected(int position) {
         switch (position){
             case 0:
-
-//                final ListView myListview=findViewById(R.id.my_list);
-//                final MyListView_Adapter myAdapter = new MyListView_Adapter(list);
-//                myListview.setTextFilterEnabled(true);//开启过滤
-//                SearchView searchView=findViewById(R.id.searchView);
-//                Button button=findViewById(R.id.btn_submmit);
-//                button.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View view) {
-//                       Toast.makeText(Main5Activity.this,"努力搜索中...",Toast.LENGTH_SHORT).show();
-//                    }
-//                });
-//        //文本改变监听
-//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-//            @Override
-//            public boolean onQueryTextSubmit(String query) {
-//                //提交监听
-//                return false;
-//            }
-//            @Override
-//            public boolean onQueryTextChange(String newText) {
-//                if(TextUtils.isEmpty(newText)){
-//                    myListview.clearTextFilter();
-//                    myAdapter.getFilter().filter("");//清除下面的提示框
-////                      MyListView_Adapter myListviewAdapter =(MyListView_Adapter) myListview.getAdapter();
-//////                    记得要设置清除对适配器的还原，不然数据不会恢复显示哦
-////                    myListviewAdapter.getFilter().filter("");
-//                }
-//                else {
-//                    myAdapter.getFilter().filter(newText);
-////                         myListview.setFilterText(newText);//对listview过滤改为 对适配器的筛选
-////                         MyListView_Adapter myListviewAdapter =(MyListView_Adapter) myListview.getAdapter();
-////                        myListviewAdapter.getFilter().filter(newText);
-//                }
-//                return true;
-//            }
-//        });
-//        //添加适配器
-//        myListview.setAdapter(myAdapter);
-//        //item点击监听
-//        myListview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> adapterView, View view, int position, long positionID) {
-//                Toast.makeText(Main5Activity.this,"即将前往详情页",Toast.LENGTH_SHORT).show();
-//                Intent info_intent=new Intent(Main5Activity.this,Main2Activity.class);
-//                //点击的item传入详情activity
-//                Book book = list.get(position);
-//                String clicked_item = gson.toJson(book);
-//                info_intent.putExtra("book_clicked",clicked_item);
-//                startActivity(info_intent);
-//            }
-//        });
-//       //刷新状态控件
-//       final SwipeRefreshLayout swipeRefreshLayout=findViewById(R.id.refresh);
-//       swipeRefreshLayout.setColorSchemeResources(R.color.red);
-//       swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-//           @Override
-//           public void onRefresh() {
-//                Http_Refresh(url);
-//               Toast.makeText(Main5Activity.this,"正在刷新",Toast.LENGTH_SHORT).show();
-//               new Handler().postDelayed(new Runnable() {
-//                   @Override
-//                   public void run(){
-//                       //在子线程已经拿到了新数据,防止没拿到
-//                       if(new_books!=null){
-//                           //实际刷新操作
-//                           list.clear();//清空
-//                           list.addAll(new_books);
-//                           myAdapter.notifyDataSetChanged();//通知适配器更新视图
-//                           swipeRefreshLayout.setRefreshing(false);
-//                           System.out.println("刷新所在线程"+Thread.currentThread().getId());//主线程
-//                           Toast.makeText(Main5Activity.this,"刷新成功",Toast.LENGTH_SHORT).show();
-//                       }
-//                       else {
-//                           //象征性提示其实啥也没改
-//                           swipeRefreshLayout.setRefreshing(false);
-//                           Toast.makeText(Main5Activity.this,"刷新成功",Toast.LENGTH_SHORT).show();
-//                       }
-//                   }
-//               },3000);
-//           }
-//       });
        //设置第一个bottommenu选中
        bottomNavigationView.getMenu().getItem(0).setChecked(true);
                 break;
                     case 1:
                         final SwipeRecyclerView recyclerView=findViewById(R.id.book_recycler_view);
-
                         final SwipeRefreshLayout refreshLayout=findViewById(R.id.lend_refresh);
                         refreshLayout.setColorSchemeResources(R.color.red);
                         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -309,36 +214,6 @@ private void initPager(ViewPager viewPager){
     而在activity的onStart调用的时候fragment的onCreateView已经调用，当然就能生成一个view对象了。
     fragment也已经加载到Activity中，
     也就可以直接通过findViewById获取fragment中的组件对象了。*/
-    //下面是frame2，加载3个按钮的，要在onstart方法重写
-//    @Override
-//    protected void onStart() {
-//        super.onStart();
-//        View v=findViewById(R.id.action_search);
-//       View V1=findViewById(R.id.action_message);
-//        View V2=findViewById(R.id.personal_center);
-//        v.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent=new Intent(Main5Activity.this,Main3Activity.class);
-//                startActivity(intent);
-//            }
-//        });
-//        //
-//        V1.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent=new Intent(Main5Activity.this,Main4Activity.class);
-//                startActivity(intent);
-//            }
-//        });
-//        V2.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Toast.makeText(Main5Activity.this,"别点了",Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//        }
-    //切换fragment
     @Override
     //this 加上重写方法
     public void onClick(View view) {
@@ -399,7 +274,7 @@ private void initPager(ViewPager viewPager){
                     holder.status.setText(books.get(position).getBkStatus());
                 }
                 //glide 第三方图片加载库，不用原生的因为那个setbackgroundResoure 只能接受int参数
-                Glide.with(holder.IV).load("http:192.168.31.83:8080/xhy/"+books.get(position).getBkURL()).into(holder.IV);
+                Glide.with(holder.IV).load(bookUrl+books.get(position).getBkURL()).into(holder.IV);
             }
             return convertView;
         }
@@ -473,23 +348,6 @@ private void initPager(ViewPager viewPager){
         }
         return super.onKeyDown(keyCode, event);
     }
-    private void Http_Refresh( String url){
-        helper.postRequest(url, new FormBody.Builder(), new Callback() {
-            @Override
-            public void onFailure(@NotNull Call call, @NotNull IOException e) {
-
-            }
-            @Override
-            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                  final String new_all_books=response.body().string();
-                System.out.println("接受的"+new_all_books);
-                new_books= new Gson().fromJson(new_all_books, new TypeToken<List<Book>>() {
-                }.getType());
-                System.out.println("http运行线程"+Thread.currentThread().getId());
-                System.out.println("赋值的"+new_books);
-            }
-        },this);
-    }
     private void Http_Refresh(){
 
         helper.postRequest(url2, new FormBody.Builder().add("rdID",user_id), new Callback() {
@@ -508,95 +366,5 @@ private void initPager(ViewPager viewPager){
             }
         },this);
     }
- private void initMenu(SwipeRecyclerView swipeRecyclerView){
-     SwipeMenuCreator menuCreator = new SwipeMenuCreator() {
-         @Override
-         public void onCreateMenu(SwipeMenu leftMenu, SwipeMenu rightMenu, int position) {
-             int width = 400;
-             int height = ViewGroup.LayoutParams.MATCH_PARENT;
-             SwipeMenuItem return_book = new SwipeMenuItem(Main5Activity.this)
-                     .setText("一键还书")
-                     .setTextSize(20)
-                     .setBackgroundColor(Color.RED)
-                     .setTextColor(Color.WHITE)
-                     .setHeight(height).setWidth(width);
-             //添加右边的还书菜单
-             rightMenu.addMenuItem(return_book);
-         }
-     };
-     swipeRecyclerView.setSwipeMenuCreator(menuCreator);
-     //可以弹出一个对话框
-     OnItemMenuClickListener itemMenuClickListener = new OnItemMenuClickListener() {
-         @Override
-         public void onItemClick(SwipeMenuBridge menuBridge, int adapterPosition) {
-             //关闭菜单任何操作必须先关闭菜单，否则可能出现Item菜单打开状态错乱
-             menuBridge.closeMenu();
-             //左右方向// 左侧还是右侧菜单：
-             int direction = menuBridge.getDirection();
-             // // 菜单在Item中的Position：0
-             int menuPosition = menuBridge.getPosition();
-             //adapterposition 是item 位置
-//               Toast.makeText(Main4Activity.this, "左右方向" + direction + "item位置" + adapterPosition + " 菜单在item中的位置" + menuPosition, Toast.LENGTH_SHORT).show();
-             //可以弹出一个对话框是否确认还书
-             showMsgDialog(adapterPosition);
-         }
-     };
-     //添加菜单监听
-     swipeRecyclerView.setOnItemMenuClickListener(itemMenuClickListener);
- }
 
-    private void showMsgDialog(final  int position) {
-        //创建AlertDialog构造器Builder对象
-        AlertDialog.Builder builder = new AlertDialog.Builder(Main5Activity.this);
-        //设置对话框标题
-        builder.setTitle("提示信息对话框");
-        //设置提示信息
-        builder.setMessage("是否确认还书！");
-        //设置对话框图标
-        builder.setIcon(R.mipmap.ic_launcher);
-        //添加确定按钮
-        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                mySwipeViewAdapter.list.remove(position);
-                mySwipeViewAdapter.notifyItemRemoved(position);
-                //调用还书
-                back_book();
-            }
-        });
-        //添加取消按钮
-        builder.setNegativeButton("取消",null);
-        //创建并显示对话框
-        builder.show();
-    }
-
-    private void back_book() {
-        String url="http:192.168.31.83:8080/xhy/Return_book_Servlet";
-        helper.postRequest(url, new FormBody.Builder()
-                .add("rdID", user_id).add("DateLendAct", record_back_time()), new Callback() {
-            @Override
-            public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                Toast.makeText(Main5Activity.this,"网络错误",Toast.LENGTH_SHORT).show();
-            }
-            @Override
-            public void onResponse(@NotNull Call call, @NotNull final Response response) throws IOException {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            Toast.makeText(Main5Activity.this,"提示:"+response.body().string(),Toast.LENGTH_SHORT).show();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                });
-            }
-        },this);
-    }
-
-    private String record_back_time() {
-        @SuppressLint("SimpleDateFormat")
-        String now_time = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calendar.getInstance().getTime());
-        return now_time;
-    }
 }

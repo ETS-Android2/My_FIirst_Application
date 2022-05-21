@@ -22,6 +22,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.transition.Transition;
 
+import static com.example.myfiirstapplication.Main3Activity.UserIamge;
 import static com.example.myfiirstapplication.Main3Activity.user_id;
 import static com.example.myfiirstapplication.Main3Activity.user_name;
 
@@ -43,7 +44,7 @@ public class Personal_fragment extends Fragment {
         relativeLayout = view.findViewById(R.id.user_background);
         //给相对布局加载图片
         Glide.with(this)
-                .load("http:192.168.31.83:8080/xhy/User_Images/" + user_id + ".png").apply(RequestOptions.centerCropTransform())
+                .load(UserIamge + user_id + ".png").apply(RequestOptions.centerCropTransform())
                 .into(new CustomTarget<Drawable>() {
                     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
                     @Override
@@ -57,7 +58,7 @@ public class Personal_fragment extends Fragment {
                         // 从任何视图中删除onResourceReady中提供的Drawable，并确保不保留对它的引用。
                     }
                 });
-        Glide.with(imageView).load("http:192.168.31.83:8080/xhy/User_Images/" + user_id + ".png").apply(RequestOptions.bitmapTransform(new CircleCrop())).into(imageView);
+        Glide.with(imageView).load(UserIamge + user_id + ".png").apply(RequestOptions.bitmapTransform(new CircleCrop())).into(imageView);
         return view;
     }
 }

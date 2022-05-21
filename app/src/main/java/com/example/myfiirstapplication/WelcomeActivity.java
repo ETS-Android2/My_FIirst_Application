@@ -10,8 +10,6 @@ import android.os.Handler;
 
 public class WelcomeActivity extends AppCompatActivity {
 
-    private final int SPLASH_DISPLAY_LENGHT = 2000;//3秒延时
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +19,8 @@ public class WelcomeActivity extends AppCompatActivity {
             getWindow().setStatusBarColor(Color.LTGRAY);
         }
         setContentView(R.layout.activity_welcome);
+        //3秒延时
+        int SPLASH_DISPLAY_LENGHT = 2000;
         new Handler().postDelayed(new Runnable() {
             @Override
                 public void run() {

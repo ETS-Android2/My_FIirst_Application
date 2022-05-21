@@ -38,6 +38,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     Button btn_login;
     private EditText username, psd;
     String rdid,pwd;
+    final static String loginUrl = "http:192.168.43.51:8080/xhy/Login";
     @Override
     protected void onCreate(Bundle savedInstanceState)  {
         super.onCreate(savedInstanceState);
@@ -92,8 +93,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             }
             else {
                 //发送post请求
-                String url = "http:192.168.31.83:8080/xhy/Login";
-                helper.postRequest(url, new FormBody.Builder()
+                helper.postRequest(loginUrl, new FormBody.Builder()
                         .add("rdID",rdid)
                         .add("rdpassword",pwd),new Callback() {
                     //回调方法还是在子线程中,还得回到UI线程

@@ -48,7 +48,7 @@ import okhttp3.Response;
 import static com.example.myfiirstapplication.Main3Activity.user_id;
 
 public class Main2Activity extends AppCompatActivity implements View.OnClickListener {
-    private  static  String  lend_time,lend_plan_time;
+     final  static String borrowUrl="http:192.168.43.51:8080/xhy/Borrow_book_Servlet";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,7 +73,7 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
         //设置书的封面
         ImageView imageView = findViewById(R.id.resume);
         assert book != null;
-        Glide.with(imageView).load("http:192.168.31.83:8080/xhy/"+ book.getBkURL()).into(imageView);
+        Glide.with(imageView).load("http:192.168.43.51:8080/xhy/"+ book.getBkURL()).into(imageView);
         TextView textView = findViewById(R.id.book_info);
         //书的简介
         textView.setText(book.getBkResume());
@@ -148,13 +148,13 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
                 show_choose_dialog(plan_time);
             }
         });
+
         AlertDialog builder=new AlertDialog.Builder(Main2Activity.this)
                 .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                     @RequiresApi(api = Build.VERSION_CODES.O)
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        String url="http:192.168.31.83:8080/xhy/Borrow_book_Servlet";
-                        helper.postRequest(url, new FormBody.Builder()
+                        helper.postRequest(borrowUrl, new FormBody.Builder()
                                 .add("rdID",user_id)
                                 .add("bkID",book.getBkID())
                                 .add("DateBorrow", lend_time.getText().toString()+" "+system_timeMills())
@@ -200,10 +200,10 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
         builder.show();
         builder.setCanceledOnTouchOutside(false);//点击其他地方不会关闭对话框
     }
-    //
+
     @Override
     public void onClick(View view) {
-     //
+
     }
     //日期选择框
 private void show_choose_dialog(final TextView textView){
